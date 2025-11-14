@@ -1,165 +1,268 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
     <title>Minecraft RPG Clicker</title>
-
-    <!-- STYLE -->
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- ======================= GLOBAL TOP UI ======================= -->
-    <header class="top-ui">
+<!-- ============================== -->
+<!--   MAIN GAME WRAPPER            -->
+<!-- ============================== -->
+<div id="game">
 
-        <div class="stats-left">
-            <div class="stat hp"><span id="hpValue"></span></div>
-            <div class="stat mp"><span id="mpValue"></span></div>
+    <!-- ============================== -->
+    <!--          TOP HUD               -->
+    <!-- ============================== -->
+    <div id="top-hud">
+
+        <div id="player-bars">
+            <div class="bar hp-bar">
+                <span class="bar-label">HP</span>
+                <div class="bar-inner" id="hp-bar-inner"></div>
+                <span class="bar-text" id="hp-bar-text">100 / 100</span>
+            </div>
+
+            <div class="bar mp-bar">
+                <span class="bar-label">MP</span>
+                <div class="bar-inner" id="mp-bar-inner"></div>
+                <span class="bar-text" id="mp-bar-text">40 / 40</span>
+            </div>
         </div>
 
-        <div class="menu-icons">
-            <img src="img/icons/bag.png" id="btnInventory" class="menu-btn">
-            <img src="img/icons/talents.png" id="btnTalents" class="menu-btn">
-            <img src="img/icons/map.png" id="btnMap" class="menu-btn">
-            <img src="img/icons/anvil.png" id="btnAnvil" class="menu-btn">
-            <img src="img/icons/enchant.png" id="btnEnchant" class="menu-btn">
-            <img src="img/icons/shop.png" id="btnShop" class="menu-btn">
-            <img src="img/icons/dungeon.png" id="btnDungeon" class="menu-btn">
+        <div id="player-info">
+            <div class="hud-pill">
+                <img src="" class="hud-icon" id="icon-level">
+                <span>Poziom:</span>
+                <b id="player-level">1</b>
+            </div>
+
+            <div class="hud-pill">
+                <img src="" class="hud-icon" id="icon-coins">
+                <span>Monety:</span>
+                <b id="player-coins">0</b>
+            </div>
         </div>
 
-        <div class="stats-right">
-            <div class="stat level">Poziom: <span id="levelValue"></span></div>
-            <div class="stat money">Monety: <span id="moneyValue"></span></div>
+    </div>
+
+    <!-- ============================== -->
+    <!--           NAV BAR              -->
+    <!-- ============================== -->
+    <div id="nav-bar">
+
+        <button class="nav-btn" data-open="panel-inventory">
+            <img src="" class="nav-icon" id="icon-inventory">
+            <span>Plecak</span>
+        </button>
+
+        <button class="nav-btn" data-open="panel-talents">
+            <img src="" class="nav-icon" id="icon-talents">
+            <span>Talenty</span>
+        </button>
+
+        <button class="nav-btn" data-open="panel-maps">
+            <img src="" class="nav-icon" id="icon-maps">
+            <span>Mapy</span>
+        </button>
+
+        <button class="nav-btn" data-open="panel-smith">
+            <img src="" class="nav-icon" id="icon-smith">
+            <span>Kowal</span>
+        </button>
+
+        <button class="nav-btn" data-open="panel-enchant">
+            <img src="" class="nav-icon" id="icon-enchant">
+            <span>Enchant</span>
+        </button>
+
+        <button class="nav-btn" data-open="panel-chests">
+            <img src="" class="nav-icon" id="icon-chests">
+            <span>Skrzynie</span>
+        </button>
+
+        <button class="nav-btn" data-open="panel-dungeon">
+            🗝
+            <span>Dungeon</span>
+        </button>
+
+    </div>
+
+    <!-- ============================== -->
+    <!--         ENEMY SECTION          -->
+    <!-- ============================== -->
+    <div id="enemy-wrapper">
+
+        <div id="enemy-background"></div>
+
+        <div id="enemy-ui">
+            <div id="enemy-name">Mob</div>
+
+            <div id="enemy-hp-bar">
+                <div id="enemy-hp-inner"></div>
+            </div>
+
+            <div id="boss-progress">
+                <span id="boss-progress-text">Postęp do bossa: 0/10</span>
+            </div>
+
+            <div id="map-name">
+                <span id="current-map-name">Biom</span>
+            </div>
         </div>
 
-    </header>
+        <img id="enemy-image" src="" alt="Mob">
 
-
-    <!-- ======================= MAIN GAME AREA ======================= -->
-    <main id="gameArea">
-
-        <h1 id="mobName"></h1>
-        <div id="mobHpBar"><div id="mobHp"></div></div>
-
-        <img id="mobSprite" src="" alt="mob">
-
-        <div id="autoAttackToggleContainer">
-            <span>Auto-attack</span>
-            <button id="autoAttackToggle">OFF</button>
+        <!-- AUTOATTACK BUTTON -->
+        <div id="autoattack-toggle">
+            <label>
+                <input type="checkbox" id="autoattack-checkbox">
+                <span>Auto-Atak</span>
+            </label>
         </div>
+    </div>
 
-        <div id="expBar"><div id="expFill"></div></div>
+    <!-- ============================== -->
+    <!--             LOG                -->
+    <!-- ============================== -->
+    <div id="combat-log"></div>
 
-        <div id="combatLog"></div>
+    <!-- ============================== -->
+    <!--           PANELS GUI           -->
+    <!-- ============================== -->
 
-    </main>
+    <!-- ********** INVENTORY ********** -->
+    <div class="panel" id="panel-inventory">
 
-
-
-    <!-- ======================= MODALE / OKNA ======================= -->
-
-
-    <!-- ===== INVENTORY ===== -->
-    <div class="modal" id="modalInventory">
-        <div class="modal-window">
+        <div class="panel-header">
             <h2>Plecak</h2>
-            <div class="inv-tabs">
-                <button data-tab="weapons">Kosy</button>
-                <button data-tab="accessories">Akcesoria</button>
-                <button data-tab="materials">Rudy</button>
-            </div>
-
-            <div id="inventoryContent"></div>
-
-            <button class="close-btn" data-close>×</button>
+            <button class="close-panel">&times;</button>
         </div>
+
+        <div class="tabs" data-tabs="inventory">
+            <button class="tab active" data-tab="inv-profile">Profil</button>
+            <button class="tab" data-tab="inv-drop">Drop</button>
+            <button class="tab" data-tab="inv-keys">Klucze</button>
+        </div>
+
+        <div class="tab-body" id="inv-profile">
+            <div class="slot-grid" id="inventory-profile-slots"></div>
+        </div>
+
+        <div class="tab-body hidden" id="inv-drop">
+            <div class="slot-grid" id="inventory-drop-slots"></div>
+        </div>
+
+        <div class="tab-body hidden" id="inv-keys">
+            <div class="slot-grid" id="inventory-key-slots"></div>
+        </div>
+
     </div>
 
+    <!-- ********** TALENTS ********** -->
+    <div class="panel" id="panel-talents">
 
-
-    <!-- ===== TALENTS ===== -->
-    <div class="modal" id="modalTalents">
-        <div class="modal-window">
+        <div class="panel-header">
             <h2>Talenty</h2>
-            <div id="talentList"></div>
-            <button class="close-btn" data-close>×</button>
+            <button class="close-panel">&times;</button>
         </div>
+
+        <div id="talent-points-display">Dostępne punkty: <b id="talent-points">0</b></div>
+
+        <div id="talent-list"></div>
+
     </div>
 
+    <!-- ********** MAPS ********** -->
+    <div class="panel" id="panel-maps">
 
-
-    <!-- ===== MAPS ===== -->
-    <div class="modal" id="modalMap">
-        <div class="modal-window wide">
+        <div class="panel-header">
             <h2>Mapy</h2>
-            <div id="mapList"></div>
-
-            <button class="close-btn" data-close>×</button>
+            <button class="close-panel">&times;</button>
         </div>
+
+        <div id="maps-list"></div>
+
     </div>
 
+    <!-- ********** SMITH ********** -->
+    <div class="panel" id="panel-smith">
 
-
-    <!-- ===== ANVIL / KOWAL ===== -->
-    <div class="modal" id="modalAnvil">
-        <div class="modal-window">
-            <h2>Kowal – ulepszanie</h2>
-            <div id="anvilContent"></div>
-            <button class="close-btn" data-close>×</button>
+        <div class="panel-header">
+            <h2>Kowal</h2>
+            <button class="close-panel">&times;</button>
         </div>
+
+        <div id="smith-upgrade-list"></div>
+
     </div>
 
+    <!-- ********** ENCHANT ********** -->
+    <div class="panel" id="panel-enchant">
 
-
-    <!-- ===== ENCHANT ===== -->
-    <div class="modal" id="modalEnchant">
-        <div class="modal-window">
-            <h2>Enchant – losowe bonusy</h2>
-            <div id="enchantInfo"></div>
-            <button id="rollEnchant">Wylosuj enchant</button>
-            <button class="close-btn" data-close>×</button>
+        <div class="panel-header">
+            <h2>Enchant</h2>
+            <button class="close-panel">&times;</button>
         </div>
+
+        <div id="enchant-info">
+            <p>Losowy enchant 1–3 szt., max 10 tierów, bez duplikatów.</p>
+        </div>
+
+        <div id="enchant-current"></div>
+
+        <button id="enchant-roll-btn">Losuj enchant</button>
+
     </div>
 
+    <!-- ********** CHESTS ********** -->
+    <div class="panel" id="panel-chests">
 
-
-    <!-- ===== SHOP / SKLEP ===== -->
-    <div class="modal" id="modalShop">
-        <div class="modal-window">
-            <h2>Sklep</h2>
-            <div id="shopContent"></div>
-            <button class="close-btn" data-close>×</button>
+        <div class="panel-header">
+            <h2>Skrzynie</h2>
+            <button class="close-panel">&times;</button>
         </div>
+
+        <div id="chest-shop"></div>
+
+        <div id="chest-open-area">
+            <h3>Otwieranie skrzyni</h3>
+            <div id="chest-room-image"></div>
+            <div id="chest-drop-list"></div>
+        </div>
+
     </div>
 
+    <!-- ********** DUNGEON ********** -->
+    <div class="panel" id="panel-dungeon">
 
-
-    <!-- ===== DUNGEON ===== -->
-    <div class="modal" id="modalDungeon">
-        <div class="modal-window wide">
+        <div class="panel-header">
             <h2>Dungeon</h2>
-
-            <div id="dungeonDifficulty">
-                <button data-diff="easy">Easy</button>
-                <button data-diff="normal">Normal</button>
-                <button data-diff="hard">Hard</button>
-                <button data-diff="insane">Insane</button>
-                <button data-diff="crazy">Crazy</button>
-                <button data-diff="nightmare">Nightmare</button>
-            </div>
-
-            <div id="dungeonInfo"></div>
-
-            <button id="startDungeon">Start</button>
-            <button class="close-btn" data-close>×</button>
+            <button class="close-panel">&times;</button>
         </div>
+
+        <div id="dungeon-difficulty">
+            <button class="difficulty-btn" data-diff="easy">EASY</button>
+            <button class="difficulty-btn" data-diff="normal">NORMAL</button>
+            <button a class="difficulty-btn" data-diff="hard">HARD</button>
+            <button class="difficulty-btn" data-diff="insane">INSANE</button>
+            <button class="difficulty-btn" data-diff="crazy">CRAZY</button>
+            <button class="difficulty-btn" data-diff="nightmare">NIGHTMARE</button>
+        </div>
+
+        <div id="dungeon-progress">
+            <p>Pokój: <b id="dungeon-room">1</b> / 50</p>
+        </div>
+
+        <div id="dungeon-start">
+            <button id="start-dungeon-btn">Rozpocznij Dungeon</button>
+        </div>
+
     </div>
 
+</div>
 
-    <!-- SCRIPTS -->
-    <script src="script.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
