@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft RPG Clicker</title>
+
+    <!-- STYLE -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ======================= GLOBAL TOP UI ======================= -->
+    <header class="top-ui">
+
+        <div class="stats-left">
+            <div class="stat hp"><span id="hpValue"></span></div>
+            <div class="stat mp"><span id="mpValue"></span></div>
+        </div>
+
+        <div class="menu-icons">
+            <img src="img/icons/bag.png" id="btnInventory" class="menu-btn">
+            <img src="img/icons/talents.png" id="btnTalents" class="menu-btn">
+            <img src="img/icons/map.png" id="btnMap" class="menu-btn">
+            <img src="img/icons/anvil.png" id="btnAnvil" class="menu-btn">
+            <img src="img/icons/enchant.png" id="btnEnchant" class="menu-btn">
+            <img src="img/icons/shop.png" id="btnShop" class="menu-btn">
+            <img src="img/icons/dungeon.png" id="btnDungeon" class="menu-btn">
+        </div>
+
+        <div class="stats-right">
+            <div class="stat level">Poziom: <span id="levelValue"></span></div>
+            <div class="stat money">Monety: <span id="moneyValue"></span></div>
+        </div>
+
+    </header>
+
+
+    <!-- ======================= MAIN GAME AREA ======================= -->
+    <main id="gameArea">
+
+        <h1 id="mobName"></h1>
+        <div id="mobHpBar"><div id="mobHp"></div></div>
+
+        <img id="mobSprite" src="" alt="mob">
+
+        <div id="autoAttackToggleContainer">
+            <span>Auto-attack</span>
+            <button id="autoAttackToggle">OFF</button>
+        </div>
+
+        <div id="expBar"><div id="expFill"></div></div>
+
+        <div id="combatLog"></div>
+
+    </main>
+
+
+
+    <!-- ======================= MODALE / OKNA ======================= -->
+
+
+    <!-- ===== INVENTORY ===== -->
+    <div class="modal" id="modalInventory">
+        <div class="modal-window">
+            <h2>Plecak</h2>
+            <div class="inv-tabs">
+                <button data-tab="weapons">Kosy</button>
+                <button data-tab="accessories">Akcesoria</button>
+                <button data-tab="materials">Rudy</button>
+            </div>
+
+            <div id="inventoryContent"></div>
+
+            <button class="close-btn" data-close>×</button>
+        </div>
+    </div>
+
+
+
+    <!-- ===== TALENTS ===== -->
+    <div class="modal" id="modalTalents">
+        <div class="modal-window">
+            <h2>Talenty</h2>
+            <div id="talentList"></div>
+            <button class="close-btn" data-close>×</button>
+        </div>
+    </div>
+
+
+
+    <!-- ===== MAPS ===== -->
+    <div class="modal" id="modalMap">
+        <div class="modal-window wide">
+            <h2>Mapy</h2>
+            <div id="mapList"></div>
+
+            <button class="close-btn" data-close>×</button>
+        </div>
+    </div>
+
+
+
+    <!-- ===== ANVIL / KOWAL ===== -->
+    <div class="modal" id="modalAnvil">
+        <div class="modal-window">
+            <h2>Kowal – ulepszanie</h2>
+            <div id="anvilContent"></div>
+            <button class="close-btn" data-close>×</button>
+        </div>
+    </div>
+
+
+
+    <!-- ===== ENCHANT ===== -->
+    <div class="modal" id="modalEnchant">
+        <div class="modal-window">
+            <h2>Enchant – losowe bonusy</h2>
+            <div id="enchantInfo"></div>
+            <button id="rollEnchant">Wylosuj enchant</button>
+            <button class="close-btn" data-close>×</button>
+        </div>
+    </div>
+
+
+
+    <!-- ===== SHOP / SKLEP ===== -->
+    <div class="modal" id="modalShop">
+        <div class="modal-window">
+            <h2>Sklep</h2>
+            <div id="shopContent"></div>
+            <button class="close-btn" data-close>×</button>
+        </div>
+    </div>
+
+
+
+    <!-- ===== DUNGEON ===== -->
+    <div class="modal" id="modalDungeon">
+        <div class="modal-window wide">
+            <h2>Dungeon</h2>
+
+            <div id="dungeonDifficulty">
+                <button data-diff="easy">Easy</button>
+                <button data-diff="normal">Normal</button>
+                <button data-diff="hard">Hard</button>
+                <button data-diff="insane">Insane</button>
+                <button data-diff="crazy">Crazy</button>
+                <button data-diff="nightmare">Nightmare</button>
+            </div>
+
+            <div id="dungeonInfo"></div>
+
+            <button id="startDungeon">Start</button>
+            <button class="close-btn" data-close>×</button>
+        </div>
+    </div>
+
+
+    <!-- SCRIPTS -->
+    <script src="script.js"></script>
+
+</body>
+</html>
